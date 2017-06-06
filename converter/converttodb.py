@@ -6,6 +6,16 @@ from routeappinfo import RouteAppInfo
 import  pickle
 
 
+def bubbleSort(connections): ##dont care how slow it is
+    for passnum in range(len(connections)-1,0,-1):
+        for i in range(passnum):
+            if connections[i].name >connections[i+1].name:
+                temp = connections[i]
+                connections[i] = connections[i+1]
+                connections[i+1] = temp
+
+
+
 airports = []
 
 
@@ -62,14 +72,13 @@ for i in range(2,sheet.max_row+1):
 
         airports.append(tempAir)
     
-
+bubbleSort(airports)
 
 for i in range(len(airports)):
     for j in range(len(airports)):
         if airports[i].name == airports[j].name and i != j:
             print("Duplicate")
 
-input("yo")
 
 for i in range(len(airports)):
     print("Airport: " + airports[i].name)
