@@ -3,6 +3,7 @@ sys.path.append('../classes')
 import openpyxl
 from airport import Airport
 from routeappinfo import RouteAppInfo
+import  pickle
 
 
 airports = []
@@ -72,3 +73,5 @@ for i in range(len(airports)):
 
 
 rapp = RouteAppInfo(airports)
+with open('../files/database.p', 'wb') as output:
+    pickle.dump(rapp, output, pickle.HIGHEST_PROTOCOL)
