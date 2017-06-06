@@ -5,11 +5,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-	##run model setup
-	if model.setup():
-		print("Success")
-	else:
-		return "DATABASE ERROR"
 	airports = model.getAirports()
 	return render_template("app.html", airports=airports)
 
@@ -21,4 +16,9 @@ def route():
 	return(str(originAirport) + str(destAirport))
 
 if __name__ == "__main__":
-	app.run(debug=True)
+	if model.setup():
+		print("Success")
+		app.run(debug=True)
+	else:
+		 print("DATABASE ERROR")
+	

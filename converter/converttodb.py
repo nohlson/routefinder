@@ -1,5 +1,5 @@
 import sys
-sys.path.append('../classes')
+sys.path.append('classes')
 import openpyxl
 from airport import Airport
 from routeappinfo import RouteAppInfo
