@@ -1,5 +1,5 @@
 import sys
-sys.path.append('classes')
+sys.path.append('../classes')
 import openpyxl
 from airport import Airport
 from routeappinfo import RouteAppInfo
@@ -26,7 +26,7 @@ for i in range(2,sheet.max_row+1):
             if not airports[j].hasConnection(connectionName): #if the connection doesn't already exist
                 print("    Connection doesn't already exist")
                 connectionExistsAsAirport = False
-                for k in range(j, len(airports)):
+                for k in range(len(airports)):
                     if connectionName == airports[k].name:
                         print("    Found dest in database")
                         airports[j].addConnection(airports[k])
@@ -64,6 +64,12 @@ for i in range(2,sheet.max_row+1):
     
 
 
+for i in range(len(airports)):
+    for j in range(len(airports)):
+        if airports[i].name == airports[j].name and i != j:
+            print("Duplicate")
+
+input("yo")
 
 for i in range(len(airports)):
     print("Airport: " + airports[i].name)
