@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--nateohlson-->
+<html>
+	<head>
+		<title>Routes</title>
+		<style type="text/css">
+			html, body { 
+				height: 100%;
+				padding: 0;
+				margin: 0;
+			}
+			table { 
+				text-align: center;
+				height: 100%;
+				width: 100%; 
+				border: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<table>
+			<tr>
+				<td>
+					<h1>Valid routes from {{origin}} to {{dest}}</h1>
+					{% for i in range(valid_routes|length): %}
+						<p>
+						{% for j in range(valid_routes[i] | length): %}
+							{{valid_routes[i][j].name}}
+							{% if j < (valid_routes[i] | length) - 1 %}
+								->
+							{% endif %}
+						{% endfor %}
+						</p>
+					{% endfor %}
+            	</td>
+			</tr>
+		</table>
+	</body>
+</html>
