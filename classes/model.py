@@ -1,5 +1,4 @@
 import sys
-sys.path.append('classes')
 import pickle
 import os.path
 from airport import Airport
@@ -11,6 +10,8 @@ from copy import deepcopy
 class Model:
 
 	def __init__(self):
+		self.airports = None
+		self.rapp = None
 		self.setup()
 
 	def setup(self):
