@@ -15,7 +15,10 @@ def index():
 def route():
 	originAirport = str(request.args['origin'])
 	destAirport = str(request.args['destination'])
-	valid_routes = m.findRoute(originAirport, destAirport)
+	if originAirport == destAirport:
+		return "Same Airport <a href=\"" + url_for('index') + "\">Return</a>"
+	numRoutes = int(request.args['numRoutes'])
+	valid_routes = m.findRoute(originAirport, destAirport, numRoutes)
 
 	return render_template("routes.html", origin = originAirport, dest = destAirport, valid_routes = valid_routes)
 

@@ -37,13 +37,12 @@ class Model:
 			self.airports.append(self.rapp.connectionslist[i].name)
 		return True
 
-	def BFS(self, graph, start, end, q):
+	def BFS(self, graph, start, end, q, numRoutes):
 
 		temp_path = [start]
 		valid_paths=[[]]
 		numValidPaths = 0
 		maxCycles = 80000
-		maxValidPaths = 300
 		cycleNum = 0;
 
 		q.enqueue(temp_path)
@@ -64,7 +63,7 @@ class Model:
 				# for i in temp_path:
 				# 	sys.stdout.write(i.name + " ->")
 				# sys.stdout.write("\n")
-				if numValidPaths > maxValidPaths:
+				if numValidPaths > numRoutes:
 					return valid_paths
 			for link_node in range(len(last_node.connections)):
 				newLinkFoundInPath = False
@@ -86,7 +85,7 @@ class Model:
 		return self.airports
 
 
-	def findRoute(self, origin, destination):
+	def findRoute(self, origin, destination, numRoutes):
 		print(origin)
 		print(destination)
 		q = AQueue()
@@ -99,7 +98,7 @@ class Model:
 			if self.rapp.connectionslist[i].name == destination:
 				destAP = self.rapp.connectionslist[i]
 				break
-		return self.BFS(self.rapp.connectionslist, originAP, destAP, q)
+		return self.BFS(self.rapp.connectionslist, originAP, destAP, q, numRoutes)
 
 
 	def verifySetup(self):
