@@ -1,8 +1,10 @@
 from flask import Flask, render_template, url_for, request
-import model
 import sys
+sys.path.append("classes")
+from model import Model
 
 app = Flask(__name__)
+model = Model()
 
 @app.route('/')
 def index():
