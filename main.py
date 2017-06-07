@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, request
 import model
+import sys
 
 app = Flask(__name__)
 
@@ -12,8 +13,9 @@ def index():
 def route():
 	originAirport = str(request.args['origin'])
 	destAirport = str(request.args['destination'])
-	model.findRoute(originAirport, destAirport)
-	return(str(originAirport) + str(destAirport))
+	valid_routes = model.findRoute(originAirport, destAirport)
+
+	return render_template("routes.html", origin = originAirport, dest = destAirport, valid_routes = valid_routes)
 
 if __name__ == "__main__":
 	if model.setup():
