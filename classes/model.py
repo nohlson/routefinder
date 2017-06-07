@@ -12,7 +12,7 @@ class Model:
 	def __init__(self):
 		self.airports = None
 		self.rapp = None
-		self.setup()
+		self.g2g = self.setup()
 
 	def setup(self):
 		##setup
@@ -43,6 +43,7 @@ class Model:
 		valid_paths=[[]]
 		numValidPaths = 0
 		maxCycles = 80000
+		maxValidPaths = 300
 		cycleNum = 0;
 
 		q.enqueue(temp_path)
@@ -63,7 +64,7 @@ class Model:
 				# for i in temp_path:
 				# 	sys.stdout.write(i.name + " ->")
 				# sys.stdout.write("\n")
-				if numValidPaths > 10:
+				if numValidPaths > maxValidPaths:
 					return valid_paths
 			for link_node in range(len(last_node.connections)):
 				newLinkFoundInPath = False
@@ -100,4 +101,7 @@ class Model:
 				break
 		return self.BFS(self.rapp.connectionslist, originAP, destAP, q)
 
+
+	def verifySetup(self):
+		return self.g2g
 		
