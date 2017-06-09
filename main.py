@@ -10,7 +10,7 @@ m = Model()
 
 @app.route('/')
 def index():
-    airports = m.getAirports()
+    airports = m.getAirportCodes()
     return render_template("app.html", airports=airports)
 
 

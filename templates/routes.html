@@ -25,7 +25,7 @@
 					{% for i in range(valid_routes|length): %}
 						<p>
 						{% for j in range(valid_routes[i] | length): %}
-							{{valid_routes[i][j].name}}
+							{{valid_routes[i][j].getCode()}}
 							{% if j < (valid_routes[i] | length) - 1 %}
 								->
 							{% endif %}

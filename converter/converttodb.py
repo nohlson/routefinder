@@ -9,7 +9,7 @@ import  pickle
 def bubbleSort(connections): ##dont care how slow it is
     for passnum in range(len(connections)-1,0,-1):
         for i in range(passnum):
-            if connections[i].name >connections[i+1].name:
+            if connections[i].getCode() >connections[i+1].getCode():
                 temp = connections[i]
                 connections[i] = connections[i+1]
                 connections[i+1] = temp
@@ -30,14 +30,14 @@ for i in range(2,sheet.max_row+1):
     print(str(airportName) + " connect to " + str(connectionName))
     airportFoundInList = False
     for j in range(len(airports)): ##go through airports
-        if airportName == airports[j].name: #if new airport exists in working database
+        if airportName == airports[j].getCode(): #if new airport exists in working database
             print("    Found origin airport in database")
             airportFoundInList = True
             if not airports[j].hasConnection(connectionName): #if the connection doesn't already exist
                 print("    Connection doesn't already exist")
                 connectionExistsAsAirport = False
                 for k in range(len(airports)):
-                    if connectionName == airports[k].name:
+                    if connectionName == airports[k].getCode():
                         print("    Found dest in database")
                         airports[j].addConnection(airports[k])
                         airports[k].addConnection(airports[j])
@@ -57,7 +57,7 @@ for i in range(2,sheet.max_row+1):
         tempAir = Airport(airportName)
         foundDestinationInList = False
         for j in range(len(airports)):
-            if connectionName == airports[j].name:
+            if connectionName == airports[j].getCode():
                 print("    Found destination in database")
                 foundDestinationInList = True
                 tempAir.addConnection(airports[j])
@@ -76,14 +76,15 @@ bubbleSort(airports)
 
 for i in range(len(airports)):
     for j in range(len(airports)):
-        if airports[i].name == airports[j].name and i != j:
+        if airports[i].getCode() == airports[j].getCode() and i != j:
             print("Duplicate")
 
 
 for i in range(len(airports)):
-    print("Airport: " + airports[i].name)
-    for j in range(len(airports[i].connections)):
-       print("    Connection to: " + airports[i].connections[j].name)
+    print("Airport: " + airports[i].getCode())
+    tempConnections = airports[i].getConnections()
+    for j in range(len(tempConnections)):
+       print("    Connection to: " + tempConnections[j].getCode())
 
 
 

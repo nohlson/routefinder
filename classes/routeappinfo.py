@@ -1,3 +1,3 @@
 class RouteAppInfo():
-    def __init__(self, connectionslist):
-        self.connectionslist = connectionslist
+    def __init__(self, airports):
+        self.airports = airports

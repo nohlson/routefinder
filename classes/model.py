@@ -7,7 +7,7 @@ from copy import deepcopy
 
 class Model:
     def __init__(self):
-        self.airports = None
+        self.__airportCodes = None
         self.rapp = None
         self.g2g = self.setup()
 
@@ -18,19 +18,14 @@ class Model:
             print('file exists')
             with open('files/database.p', 'rb') as input:
                 self.rapp = pickle.load(input)
-            for i in range(len(self.rapp.connectionslist)):
-                for j in range(len(self.rapp.connectionslist)):
-                    if self.rapp.connectionslist[i].name == self.rapp.connectionslist[j].name and i != j:
-                        print("duplicate")
-                print(self.rapp.connectionslist[i].name)
         else:
             print("error")
             return False
 
         # build list of just airport names
-        self.airports = []
-        for i in range(len(self.rapp.connectionslist)):
-            self.airports.append(self.rapp.connectionslist[i].name)
+        self.__airportCodes = []
+        for i in range(len(self.rapp.airports)):
+            self.__airportCodes.append(self.rapp.airports[i].getCode())
         return True
 
     def BFS(self, graph, start, end, q, numRoutes):
@@ -49,26 +44,27 @@ class Model:
             temp_path = q.dequeue()
             last_node = temp_path[len(temp_path) - 1]
             # for i in temp_path:
-            # 	sys.stdout.write(i.name + " ->")
+            # 	sys.stdout.write(i.getCode() + " ->")
             # sys.stdout.write("\n")
-            if last_node.name == end.name:
+            if last_node.getCode() == end.getCode():
                 numValidPaths += 1
-                # sys.stdout.write("Valid path: ")
+                sys.stdout.write("Valid path: ")
                 new_temp = deepcopy(temp_path)
                 valid_paths.append(new_temp)
                 # for i in temp_path:
-                # 	sys.stdout.write(i.name + " ->")
+                # 	sys.stdout.write(i.getCode() + " ->")
                 # sys.stdout.write("\n")
                 if numValidPaths > numRoutes:
                     return valid_paths
-            for link_node in range(len(last_node.connections)):
+            lastNodeConnections = last_node.getConnections()
+            for link_node in range(len(lastNodeConnections)):
                 newLinkFoundInPath = False
                 for k in range(len(temp_path)):
-                    if last_node.connections[link_node].name == temp_path[k].name:
+                    if lastNodeConnections[link_node].getCode() == temp_path[k].getCode():
                         newLinkFoundInPath = True
                         break
                 if not newLinkFoundInPath:
-                    new_path = temp_path + [last_node.connections[link_node]]
+                    new_path = temp_path + [lastNodeConnections[link_node]]
                     q.enqueue(new_path)
             cycleNum += 1
             if cycleNum % 10000 == 0:
@@ -76,23 +72,23 @@ class Model:
         sys.stdout.write("Done")
         return valid_paths
 
-    def getAirports(self):
-        return self.airports
+    def getAirportCodes(self):
+        return self.__airportCodes
 
     def findRoute(self, origin, destination, numRoutes):
         print(origin)
         print(destination)
         q = AQueue()
         # find origin and destination self.airports
-        for i in range(len(self.rapp.connectionslist)):
-            if self.rapp.connectionslist[i].name == origin:
-                originAP = self.rapp.connectionslist[i]
+        for i in range(len(self.rapp.airports)):
+            if self.rapp.airports[i].getCode() == origin:
+                originAP = self.rapp.airports[i]
                 break
-        for i in range(len(self.rapp.connectionslist)):
-            if self.rapp.connectionslist[i].name == destination:
-                destAP = self.rapp.connectionslist[i]
+        for i in range(len(self.rapp.airports)):
+            if self.rapp.airports[i].getCode() == destination:
+                destAP = self.rapp.airports[i]
                 break
-        return self.BFS(self.rapp.connectionslist, originAP, destAP, q, numRoutes)
+        return self.BFS(self.rapp.airports, originAP, destAP, q, numRoutes)
 
     def verifySetup(self):
         return self.g2g

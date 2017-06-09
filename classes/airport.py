@@ -1,14 +1,23 @@
 class Airport:
-    def __init__(self, name):
-        self.name = name
-        self.connections = []
+    def __init__(self, code):
+        self.__code = code
+        self.__connections = []
 
     def addConnection(self, connect):
-        self.connections.append(connect)
+        self.__connections.append(connect)
+
+    def getCode(self):
+        return self.__code
+
+    def setCode(self, code):
+        self.__code = code
 
     def hasConnection(self, connect):
-        for i in self.connections:
-            if connect == i.name:
+        for i in self.__connections:
+            if connect == i.getCode():
                 return True
 
         return False
+
+    def getConnections(self):
+        return self.__connections
