@@ -3,6 +3,7 @@ import pickle
 import os.path
 from aqueue import AQueue
 from copy import deepcopy
+from route import Route
 
 
 class Model:
@@ -31,7 +32,7 @@ class Model:
     def BFS(self, graph, start, end, q, numRoutes):
 
         temp_path = [start]
-        valid_paths = [[]]
+        valid_paths = []
         numValidPaths = 0
         maxCycles = 80000
         cycleNum = 0
@@ -50,7 +51,11 @@ class Model:
                 numValidPaths += 1
                 sys.stdout.write("Valid path: ")
                 new_temp = deepcopy(temp_path)
-                valid_paths.append(new_temp)
+                #construct a route object
+                tempRoute = Route(temp_path[0])
+                for j in range(1, len(temp_path)):
+                    tempRoute.addAirport(temp_path[j])
+                valid_paths.append(tempRoute)
                 # for i in temp_path:
                 # 	sys.stdout.write(i.getCode() + " ->")
                 # sys.stdout.write("\n")
