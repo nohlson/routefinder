@@ -60,11 +60,11 @@ class Model:
             for link_node in range(len(lastNodeConnections)):
                 newLinkFoundInPath = False
                 for k in range(len(temp_path)):
-                    if lastNodeConnections[link_node].getCode() == temp_path[k].getCode():
+                    if lastNodeConnections[link_node].getAirport().getCode() == temp_path[k].getCode():
                         newLinkFoundInPath = True
                         break
                 if not newLinkFoundInPath:
-                    new_path = temp_path + [lastNodeConnections[link_node]]
+                    new_path = temp_path + [lastNodeConnections[link_node].getAirport()]
                     q.enqueue(new_path)
             cycleNum += 1
             if cycleNum % 10000 == 0:
