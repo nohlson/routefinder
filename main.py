@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, request
-import sys
+import os, sys
+sys.path.append(os.getcwd() + "/classes")
 
-sys.path.append("classes")
 from model import Model
 
 app = Flask(__name__)
